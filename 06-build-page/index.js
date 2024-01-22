@@ -30,14 +30,6 @@ readStream.on('error', (err) => {
 const buildingHtml = () => {
   const componentsTemplates = 'components';
 
-  const regexTags = /{{([^{}]+)}}/;
-
-  // indexHTML = indexHTML.replace(regexTags, 'fas');
-  // indexHTML = indexHTML.replace(regexTags, 'fas2');
-  // indexHTML = indexHTML.replace(regexTags, 'fas3');
-  //
-  // console.log(indexHTML);
-
   fs.readdir(componentsTemplates, (err, files) => {
     if (err) console.log(err);
     console.log(files);
