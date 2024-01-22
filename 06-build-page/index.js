@@ -32,7 +32,6 @@ const buildingHtml = () => {
 
   fs.readdir(componentsTemplates, (err, files) => {
     if (err) console.log(err);
-    console.log(files);
 
     files.forEach((file) => {
       const readStream = fs.createReadStream(`${componentsTemplates}/${file}`, {
