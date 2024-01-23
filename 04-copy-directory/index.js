@@ -6,7 +6,7 @@ const directoryPathCopy = 'copy-files';
 fs.readdir(directoryPath, (err, files) => {
   fs.mkdir(directoryPathCopy, { recursive: true }, (err) => {
     if (err) console.error(err);
-    console.log('Директория успешно создана');
+    console.log(`Директория ${directoryPathCopy} успешно создана`);
   });
 
   files.forEach((file) => {
@@ -15,7 +15,7 @@ fs.readdir(directoryPath, (err, files) => {
       `${directoryPathCopy}/${file}`,
       (err) => {
         if (err) console.error(err);
-        console.log('Все файлы скопированы');
+        console.log(`${file} скопирован`);
       },
     );
   });
