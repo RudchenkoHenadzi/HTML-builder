@@ -1,9 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
-const pathTemplate = 'template.html';
-const pathAssets = 'assets';
-const pathDistAssets = 'project-dist/assets';
+const pathTemplate = path.join(__dirname, 'template.html');
+const pathAssets = path.join(__dirname, 'assets');
+const pathProjectDist = path.join(__dirname, 'project-dist');
+const pathDistAssets = path.join(__dirname, 'project-dist/assets');
+
 let indexHTML;
 
 const readStream = fs.createReadStream(pathTemplate, {
@@ -15,7 +17,7 @@ readStream.on('data', (chunk) => {
 });
 
 readStream.on('end', () => {
-  fs.mkdir('project-dist', { recursive: true }, (err) => {
+  fs.mkdir(pathProjectDist, { recursive: true }, (err) => {
     if (err) console.log(err);
   });
   buildingHtml();
@@ -28,8 +30,7 @@ readStream.on('error', (err) => {
 });
 
 const buildingHtml = () => {
-  const componentsTemplates = 'components';
-
+  const componentsTemplates = path.join(__dirname, 'components');
   fs.readdir(componentsTemplates, (err, files) => {
     if (err) console.log(err);
 
@@ -43,9 +44,12 @@ const buildingHtml = () => {
       });
 
       readStream.on('end', () => {
-        const writeStream = fs.createWriteStream('project-dist/index.html', {
-          encoding: 'utf8',
-        });
+        const writeStream = fs.createWriteStream(
+          path.join(__dirname, 'project-dist/index.html'),
+          {
+            encoding: 'utf8',
+          },
+        );
 
         writeStream.write(indexHTML);
       });
@@ -54,15 +58,21 @@ const buildingHtml = () => {
 };
 
 const buildingStyle = () => {
-  const writeStream = fs.createWriteStream('project-dist/style.css', {
-    encoding: 'utf8',
-  });
-  fs.readdir('styles', (err, files) => {
+  const writeStream = fs.createWriteStream(
+    path.join(__dirname, 'project-dist/style.css'),
+    {
+      encoding: 'utf8',
+    },
+  );
+  fs.readdir(path.join(__dirname, 'styles'), (err, files) => {
     if (err) console.log(err);
     files.forEach((file) => {
-      const readStream = fs.createReadStream(`styles/${file}`, {
-        encoding: 'utf8',
-      });
+      const readStream = fs.createReadStream(
+        path.join(__dirname, `styles/${file}`),
+        {
+          encoding: 'utf8',
+        },
+      );
       readStream.on('data', (chunk) => {
         writeStream.write(chunk);
       });

@@ -1,7 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 
-const directoryPath = 'files';
-const directoryPathCopy = 'copy-files';
+const directoryPath = path.join(__dirname, 'files');
+const directoryPathCopy = path.join(__dirname, 'copy-files');
 
 fs.readdir(directoryPath, (err, files) => {
   fs.mkdir(directoryPathCopy, { recursive: true }, (err) => {
